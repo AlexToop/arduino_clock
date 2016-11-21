@@ -4,7 +4,14 @@
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 
-LiquidCrystal_I2C lcd(0x27, 16, 2); // set the LCD address to 0x27 for a 16 chars and 2 line display
+
+/*
+	This is a program attempting to interact with a serial clock module
+	and to display the time on a LCD display using an Arduino.
+*/
+
+// set the LCD address to 0x27 for a 16 chars and 2 line display
+LiquidCrystal_I2C lcd(0x27, 16, 2); 
 
 uint8_t CE_PIN   = 5;  //RST pin attach to
 uint8_t IO_PIN   = 6;  //
@@ -36,7 +43,9 @@ void print_time()
     case 7: strcpy(day, "SAT"); break;
   }
   /* Shows format, however just sets size of the buffer */
-  snprintf(buf, sizeof(buf), "%04d-%02d-%02d %s %02d:%02d:%02d", t.yr, t.mon, t.date, day, t.hr, t.min, t.sec);
+  snprintf(buf, sizeof(buf), 
+  	"%04d-%02d-%02d %s %02d:%02d:%02d", t.yr, 
+  	t.mon, t.date, day, t.hr, t.min, t.sec);
   /* Prints out the display */
   Serial.println(buf);
 
@@ -73,7 +82,7 @@ void setup()
   rtc.halt(false);
 
   /*
-    // takes 2 seconds to boot and set
+    // takes 2 seconds to boot and set time
     Time t2(2016, 11, 14, 1, 4, 20, 2);
     rtc.time(t2);
   */
@@ -95,7 +104,7 @@ void loop()
   /* comdata, numdata */
   if (mark == 1)
   {
-    Serial.print("You input : ");
+    Serial.print("You input: ");
     Serial.println(comdata);
     for (int i = 0; i < comdata.length() ; i++)
     {
@@ -109,7 +118,8 @@ void loop()
       }
     }
     /* numdata - DS1302 */
-    Time t(numdata[0], numdata[1], numdata[2], numdata[3], numdata[4], numdata[5], numdata[6]);
+    Time t(numdata[0], numdata[1], numdata[2], numdata[3], 
+    	numdata[4], numdata[5], numdata[6]);
     rtc.time(t);
     mark = 0; j = 0;
     /* comdata */
