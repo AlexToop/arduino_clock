@@ -83,10 +83,10 @@ void setup() {
 
   // takes 2 seconds to boot and set time
   // year, month, date, hour, min, sec, day
-  /*
-      Time t2(2016, 11, 30, 2, 25, 55, 1);
-      rtc.time(t2);
-  */
+ 
+//      Time t2(2016, 12, 2, 20, 39, 0, 6);
+//      rtc.time(t2);
+
 
   lcd.init();  //initialize the lcd
   lcd.backlight();  //open the backlight
@@ -130,7 +130,7 @@ void loop() {
   /* prints time every second */
   print_time();
   Time t = rtc.time();
-  if ((t.sec / 10) == (0)) {
+  if ((t.hr / 10) == (0)) {
     lcd.setCursor(11, 1);
     lcd.print(" ");
   } else {
